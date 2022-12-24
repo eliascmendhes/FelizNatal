@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    .gif {
+      background-image: url("");
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    h1 {
+      font-size: 34px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gif">
+    <h1>Feliz Natal</h1>
+  </div>
+  <script>
+    // URL da API do Giphy
+    const API_URL = "https://api.giphy.com/v1/gifs/random";
+
+    // Chave de API do Giphy
+    const API_KEY = "NI6XACo0naENKF1JNiWDqmOHup5ohrnv";
+
+    function updateGif() {
+      // Realiza uma requisição HTTP para a API do Giphy
+      fetch(`${API_URL}?api_key=${API_KEY}&tag=christmas`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Obtém o URL do gif da resposta
+          const gifUrl = data.data.images.original.url;
+
+          // Atualiza o background-image do elemento com o gif
+          document.querySelector(".gif").style.backgroundImage = `url(${gifUrl})`;
+        });
+    }
+
+    // Executa a função updateGif a cada 5 segundos
+    setInterval(updateGif, 1000 * 5);
+
+    // Define a última hora em que a página foi atualizada
+    let lastRefreshTime = Date.now();
+
+    // Atualiza a página automaticamente a cada 1 minuto
+    setInterval(() => {
+      // Verifica se a página foi atualizada nos últimos 60 segundos
+      if (Date.now() - lastRefreshTime > 1000 * 60) {
+        // Se não foi, atualiza a página
+        location.reload();
+      }
+    }, 1000 * 5);
+  </script>
+</body>
+
+</html>
